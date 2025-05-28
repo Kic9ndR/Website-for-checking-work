@@ -1,0 +1,135 @@
+Blender 3.6.5 (hash cf1e1ed46b7e built 2023-10-18 23:31:25)
+Error: Python: OSError: Python file "/app/model_checker.py" could not be opened: No such file or directory
+
+Blender quit
+2025-04-30 22:29:07,874 - __main__ - INFO - --- Starting check_model.py --- 
+2025-04-30 22:29:07,874 - __main__ - INFO - Script arguments: ['/opt/blender/blender', '-b', '-P', '/app/check_model.py', '--', '/data/test.fbx', '/output/results.json']
+2025-04-30 22:29:07,875 - __main__ - INFO - Current working directory: /app
+2025-04-30 22:29:07,875 - __main__ - INFO - Python sys.path: ['/opt/blender/3.6/scripts/startup', '/opt/blender/3.6/scripts/modules', '/opt/blender/3.6/python/lib/python310.zip', '/opt/blender/3.6/python/lib/python3.10', '/opt/blender/3.6/python/lib/python3.10/lib-dynload', '/opt/blender/3.6/python/lib/python3.10/site-packages', '/opt/blender/3.6/scripts/freestyle/modules', '/opt/blender/3.6/scripts/addons/modules', '/app/addons/modules', '/opt/blender/3.6/scripts/addons', '/app/addons', '/app']
+2025-04-30 22:29:07,878 - __main__ - DEBUG - Contents of /: ['lib32', 'run', 'srv', 'proc', 'usr', 'lib64', 'boot', 'opt', 'home', 'sys', 'root', 'mnt', 'etc', 'media', 'sbin', 'tmp', 'bin', 'lib', 'dev', 'libx32', 'var', 'data', '.dockerenv', 'app', 'input', 'output']
+2025-04-30 22:29:07,878 - __main__ - DEBUG - Contents of /app: ['addons', 'check_model.sh', 'check_model.py', 'requirements.txt']
+2025-04-30 22:29:07,879 - __main__ - DEBUG - Contents of /app/addons: ['headless_checker.py', 'main.py', 'model_checker.py', 'utils.py', '__pycache__']
+2025-04-30 22:29:07,881 - __main__ - DEBUG - Contents of /data: ['bouncing_ball.blend', 'test.fbx']
+2025-04-30 22:29:07,882 - __main__ - DEBUG - Contents of /output: ['blender_checker.log']
+2025-04-30 22:29:07,882 - __main__ - INFO - Received Input path: /data/test.fbx
+2025-04-30 22:29:07,882 - __main__ - INFO - Received Output path: /output/results.json
+2025-04-30 22:29:07,882 - addons.headless_checker - INFO - Начинаем проверку модели: /data/test.fbx
+2025-04-30 22:29:07,884 - addons.headless_checker - INFO - Создана временная директория: /tmp/blender_checker_temp/Extracted_test_957d5c25
+2025-04-30 22:29:07,884 - addons.headless_checker - INFO - Создана директория для текстур: /tmp/blender_checker_temp/Extracted_test_957d5c25/Textures
+2025-04-30 22:29:07,884 - addons.headless_checker - INFO - Обнаружен FBX файл: /data/test.fbx
+2025-04-30 22:29:07,895 - addons.headless_checker - INFO - Очищаем сцену...
+2025-04-30 22:29:07,896 - addons.headless_checker - INFO - Сцена очищена.
+2025-04-30 22:29:07,897 - addons.headless_checker - INFO - Импорт 1 FBX файлов...
+2025-04-30 22:29:07,897 - addons.headless_checker - INFO - Импорт FBX: /tmp/blender_checker_temp/Extracted_test_957d5c25/test.fbx
+2025-04-30 22:29:08,291 - addons.headless_checker - ERROR - Ошибка при импорте FBX '/tmp/blender_checker_temp/Extracted_test_957d5c25/test.fbx': Error: Couldn't open file '/tmp/blender_checker_temp/Extracted_test_957d5c25/test.fbx' (Invalid header)
+Traceback (most recent call last):
+  File "/app/addons/headless_checker.py", line 330, in _import_fbx_files
+    bpy.ops.import_scene.fbx(
+  File "/opt/blender/3.6/scripts/modules/bpy/ops.py", line 113, in __call__
+    ret = _op_call(self.idname_py(), None, kw)
+RuntimeError: Error: Couldn't open file '/tmp/blender_checker_temp/Extracted_test_957d5c25/test.fbx' (Invalid header)
+
+2025-04-30 22:29:08,296 - addons.headless_checker - INFO - Импорт FBX файлов завершен. Всего извлечено вшитых текстур: 0
+2025-04-30 22:29:08,298 - addons.headless_checker - INFO - Выполнение глобальных проверок...
+2025-04-30 22:29:08,298 - addons.headless_checker - INFO - [Global Check] Содержимое сцены... Result: FAILED - Найдены камеры; Найдены источники света
+2025-04-30 22:29:08,299 - addons.headless_checker - INFO - [Global Check] Опуск Ground... Result: N/A - Объекты Ground не найдены
+2025-04-30 22:29:08,299 - addons.headless_checker - INFO - Глобальные проверки текстур: Текстуры не найдены.
+2025-04-30 22:29:08,299 - addons.headless_checker - INFO - [Global Check] Количество полигонов... Result: N/A - Меш объекты не найдены.
+2025-04-30 22:29:08,300 - addons.headless_checker - INFO - Собираем информацию и проверяем меши...
+2025-04-30 22:29:08,300 - addons.headless_checker - WARNING - Меш объекты для проверки не найдены.
+2025-04-30 22:29:08,300 - addons.headless_checker - INFO - Проверка нейминга материалов и текстур...
+2025-04-30 22:29:08,301 - addons.headless_checker - DEBUG - Global check failed: scene_content - Status: FAILED
+2025-04-30 22:29:08,301 - addons.headless_checker - WARNING - Обнаружены ошибки при проверке модели.
+2025-04-30 22:29:08,302 - addons.headless_checker - INFO - Удалена временная директория: /tmp/blender_checker_temp/Extracted_test_957d5c25
+2025-04-30 22:29:08,302 - addons.headless_checker - INFO - Запись результатов в: /output/results.json
+2025-04-30 22:29:08,304 - addons.headless_checker - INFO - Результаты успешно сохранены.
+2025-04-30 22:29:08,305 - addons.headless_checker - INFO - Проверка модели /data/test.fbx завершена за 0:00:00.422096. Статус: failed
+2025-04-30 22:29:08,305 - __main__ - INFO - --- Finished check_model.py with status: failed ---
+2025-04-30 22:30:08,851 - __main__ - INFO - --- Starting check_model.py --- 
+2025-04-30 22:30:08,851 - __main__ - INFO - Script arguments: ['/opt/blender/blender', '-b', '/data/bouncing_ball.blend', '-P', '/app/check_model.py', '--', '/data/test.fbx', '/output/results.json']
+2025-04-30 22:30:08,852 - __main__ - INFO - Current working directory: /app
+2025-04-30 22:30:08,852 - __main__ - INFO - Python sys.path: ['/opt/blender/3.6/scripts/startup', '/opt/blender/3.6/scripts/modules', '/opt/blender/3.6/python/lib/python310.zip', '/opt/blender/3.6/python/lib/python3.10', '/opt/blender/3.6/python/lib/python3.10/lib-dynload', '/opt/blender/3.6/python/lib/python3.10/site-packages', '/opt/blender/3.6/scripts/freestyle/modules', '/opt/blender/3.6/scripts/addons/modules', '/app/addons/modules', '/opt/blender/3.6/scripts/addons', '/app/addons', '/app']
+2025-04-30 22:30:08,853 - __main__ - DEBUG - Contents of /: ['lib32', 'run', 'srv', 'proc', 'usr', 'lib64', 'boot', 'opt', 'home', 'sys', 'root', 'mnt', 'etc', 'media', 'sbin', 'tmp', 'bin', 'lib', 'dev', 'libx32', 'var', 'data', 'app', '.dockerenv', 'input', 'output']
+2025-04-30 22:30:08,853 - __main__ - DEBUG - Contents of /app: ['addons', 'check_model.sh', 'check_model.py', 'requirements.txt']
+2025-04-30 22:30:08,853 - __main__ - DEBUG - Contents of /app/addons: ['utils.py', 'main.py', 'model_checker.py', 'headless_checker.py', '__pycache__']
+2025-04-30 22:30:08,855 - __main__ - DEBUG - Contents of /data: ['bouncing_ball.blend', 'test.fbx']
+2025-04-30 22:30:08,856 - __main__ - DEBUG - Contents of /output: ['blender_checker.log', 'results.json']
+2025-04-30 22:30:08,857 - __main__ - INFO - Received Input path: /data/test.fbx
+2025-04-30 22:30:08,857 - __main__ - INFO - Received Output path: /output/results.json
+2025-04-30 22:30:08,857 - addons.headless_checker - INFO - Начинаем проверку модели: /data/test.fbx
+2025-04-30 22:30:08,859 - addons.headless_checker - INFO - Создана временная директория: /tmp/blender_checker_temp/Extracted_test_e4a00f96
+2025-04-30 22:30:08,859 - addons.headless_checker - INFO - Создана директория для текстур: /tmp/blender_checker_temp/Extracted_test_e4a00f96/Textures
+2025-04-30 22:30:08,860 - addons.headless_checker - INFO - Обнаружен FBX файл: /data/test.fbx
+2025-04-30 22:30:08,870 - addons.headless_checker - INFO - Очищаем сцену...
+2025-04-30 22:30:08,871 - addons.headless_checker - INFO - Сцена очищена.
+2025-04-30 22:30:08,871 - addons.headless_checker - INFO - Импорт 1 FBX файлов...
+2025-04-30 22:30:08,871 - addons.headless_checker - INFO - Импорт FBX: /tmp/blender_checker_temp/Extracted_test_e4a00f96/test.fbx
+2025-04-30 22:30:09,143 - addons.headless_checker - ERROR - Ошибка при импорте FBX '/tmp/blender_checker_temp/Extracted_test_e4a00f96/test.fbx': Error: Couldn't open file '/tmp/blender_checker_temp/Extracted_test_e4a00f96/test.fbx' (Invalid header)
+Traceback (most recent call last):
+  File "/app/addons/headless_checker.py", line 330, in _import_fbx_files
+    bpy.ops.import_scene.fbx(
+  File "/opt/blender/3.6/scripts/modules/bpy/ops.py", line 113, in __call__
+    ret = _op_call(self.idname_py(), None, kw)
+RuntimeError: Error: Couldn't open file '/tmp/blender_checker_temp/Extracted_test_e4a00f96/test.fbx' (Invalid header)
+
+2025-04-30 22:30:09,144 - addons.headless_checker - INFO - Импорт FBX файлов завершен. Всего извлечено вшитых текстур: 0
+2025-04-30 22:30:09,145 - addons.headless_checker - INFO - Выполнение глобальных проверок...
+2025-04-30 22:30:09,146 - addons.headless_checker - INFO - [Global Check] Содержимое сцены... Result: FAILED - Найдены камеры; Найдены источники света
+2025-04-30 22:30:09,146 - addons.headless_checker - INFO - [Global Check] Опуск Ground... Result: N/A - Объекты Ground не найдены
+2025-04-30 22:30:09,146 - addons.headless_checker - INFO - Глобальные проверки текстур: Текстуры не найдены.
+2025-04-30 22:30:09,147 - addons.headless_checker - INFO - [Global Check] Количество полигонов... Result: N/A - Меш объекты не найдены.
+2025-04-30 22:30:09,147 - addons.headless_checker - INFO - Собираем информацию и проверяем меши...
+2025-04-30 22:30:09,147 - addons.headless_checker - WARNING - Меш объекты для проверки не найдены.
+2025-04-30 22:30:09,148 - addons.headless_checker - INFO - Проверка нейминга материалов и текстур...
+2025-04-30 22:30:09,148 - addons.headless_checker - DEBUG - Global check failed: scene_content - Status: FAILED
+2025-04-30 22:30:09,148 - addons.headless_checker - WARNING - Обнаружены ошибки при проверке модели.
+2025-04-30 22:30:09,149 - addons.headless_checker - INFO - Удалена временная директория: /tmp/blender_checker_temp/Extracted_test_e4a00f96
+2025-04-30 22:30:09,149 - addons.headless_checker - INFO - Запись результатов в: /output/results.json
+2025-04-30 22:30:09,151 - addons.headless_checker - INFO - Результаты успешно сохранены.
+2025-04-30 22:30:09,151 - addons.headless_checker - INFO - Проверка модели /data/test.fbx завершена за 0:00:00.293906. Статус: failed
+2025-04-30 22:30:09,151 - __main__ - INFO - --- Finished check_model.py with status: failed ---
+2025-04-30 22:31:51,489 - __main__ - INFO - --- Starting check_model.py --- 
+2025-04-30 22:31:51,490 - __main__ - INFO - Script arguments: ['/opt/blender/blender', '-b', '-P', '/app/check_model.py', '--', '/data/test.fbx', '/output/results.json']
+2025-04-30 22:31:51,490 - __main__ - INFO - Current working directory: /app
+2025-04-30 22:31:51,490 - __main__ - INFO - Python sys.path: ['/opt/blender/3.6/scripts/startup', '/opt/blender/3.6/scripts/modules', '/opt/blender/3.6/python/lib/python310.zip', '/opt/blender/3.6/python/lib/python3.10', '/opt/blender/3.6/python/lib/python3.10/lib-dynload', '/opt/blender/3.6/python/lib/python3.10/site-packages', '/opt/blender/3.6/scripts/freestyle/modules', '/opt/blender/3.6/scripts/addons/modules', '/app/addons/modules', '/opt/blender/3.6/scripts/addons', '/app/addons', '/app']
+2025-04-30 22:31:51,491 - __main__ - DEBUG - Contents of /: ['lib32', 'run', 'srv', 'proc', 'usr', 'lib64', 'boot', 'opt', 'home', 'sys', 'root', 'mnt', 'etc', 'media', 'sbin', 'tmp', 'bin', 'lib', 'dev', 'libx32', 'var', 'data', '.dockerenv', 'app', 'input', 'output']
+2025-04-30 22:31:51,491 - __main__ - DEBUG - Contents of /app: ['addons', 'check_model.sh', 'check_model.py', 'requirements.txt']
+2025-04-30 22:31:51,492 - __main__ - DEBUG - Contents of /app/addons: ['headless_checker.py', 'main.py', 'model_checker.py', 'utils.py', '__pycache__']
+2025-04-30 22:31:51,494 - __main__ - DEBUG - Contents of /data: ['bouncing_ball.blend', 'create_test_fbx.py', 'test.fbx']
+2025-04-30 22:31:51,495 - __main__ - DEBUG - Contents of /output: ['blender_checker.log', 'results.json']
+2025-04-30 22:31:51,495 - __main__ - INFO - Received Input path: /data/test.fbx
+2025-04-30 22:31:51,496 - __main__ - INFO - Received Output path: /output/results.json
+2025-04-30 22:31:51,496 - addons.headless_checker - INFO - Начинаем проверку модели: /data/test.fbx
+2025-04-30 22:31:51,497 - addons.headless_checker - INFO - Создана временная директория: /tmp/blender_checker_temp/Extracted_test_830551c6
+2025-04-30 22:31:51,497 - addons.headless_checker - INFO - Создана директория для текстур: /tmp/blender_checker_temp/Extracted_test_830551c6/Textures
+2025-04-30 22:31:51,497 - addons.headless_checker - INFO - Обнаружен FBX файл: /data/test.fbx
+2025-04-30 22:31:51,502 - addons.headless_checker - INFO - Очищаем сцену...
+2025-04-30 22:31:51,504 - addons.headless_checker - INFO - Сцена очищена.
+2025-04-30 22:31:51,504 - addons.headless_checker - INFO - Импорт 1 FBX файлов...
+2025-04-30 22:31:51,505 - addons.headless_checker - INFO - Импорт FBX: /tmp/blender_checker_temp/Extracted_test_830551c6/test.fbx
+2025-04-30 22:31:51,772 - addons.headless_checker - INFO - Успешно импортирован FBX: /tmp/blender_checker_temp/Extracted_test_830551c6/test.fbx
+2025-04-30 22:31:51,772 - addons.headless_checker - INFO - Извлечение вшитых текстур...
+2025-04-30 22:31:51,773 - addons.headless_checker - INFO - Извлечено 0 вшитых текстур.
+2025-04-30 22:31:51,773 - addons.headless_checker - INFO - Импорт FBX файлов завершен. Всего извлечено вшитых текстур: 0
+2025-04-30 22:31:51,775 - addons.headless_checker - INFO - Выполнение глобальных проверок...
+2025-04-30 22:31:51,775 - addons.headless_checker - INFO - [Global Check] Содержимое сцены... Result: FAILED - Найдены камеры; Найдены источники света
+2025-04-30 22:31:51,775 - addons.headless_checker - INFO - [Global Check] Опуск Ground... Result: N/A - Объекты Ground не найдены
+2025-04-30 22:31:51,775 - addons.headless_checker - INFO - Глобальные проверки текстур: Текстуры не найдены.
+2025-04-30 22:31:51,776 - addons.headless_checker - INFO - [Global Check] Количество полигонов... Result: N/A - Полигоны для подсчета не найдены.
+2025-04-30 22:31:51,776 - addons.headless_checker - INFO - Собираем информацию и проверяем меши...
+2025-04-30 22:31:51,776 - addons.headless_checker - INFO - --- Обработка объекта: Cube ---
+2025-04-30 22:31:51,778 - addons.headless_checker - DEBUG -     [Check] Чистота геометрии для Cube... Result: PASSED - Геометрия чистая.
+2025-04-30 22:31:51,778 - addons.headless_checker - DEBUG -     [Check] Триангуляция для Cube... Result: FAILED - Найдены нетреугольные полигоны (6)
+2025-04-30 22:31:51,778 - addons.headless_checker - DEBUG -     [Check] Трансформации для Cube... Result: PASSED - Трансформации сброшены.
+2025-04-30 22:31:51,779 - addons.headless_checker - DEBUG -     [Check] UV-карты для Cube... Result: FAILED - Нарушен отступ от края (8px для 2048x2048)
+2025-04-30 22:31:51,780 - addons.headless_checker - DEBUG -     [Check] Материал 'glass' для Cube... Result: ABSENT - Материал содержащий 'glass' не найден
+2025-04-30 22:31:51,780 - addons.headless_checker - DEBUG -     [Check] Материал 'ground' для Cube... Result: ABSENT - Материал содержащий 'ground' не найден
+2025-04-30 22:31:51,780 - addons.headless_checker - INFO - --- Завершение обработки объекта: Cube ---
+2025-04-30 22:31:51,780 - addons.headless_checker - INFO - Проверка нейминга материалов и текстур...
+2025-04-30 22:31:51,780 - addons.headless_checker - DEBUG - Global check failed: scene_content - Status: FAILED
+2025-04-30 22:31:51,781 - addons.headless_checker - WARNING - Обнаружены ошибки при проверке модели.
+2025-04-30 22:31:51,781 - addons.headless_checker - INFO - Удалена временная директория: /tmp/blender_checker_temp/Extracted_test_830551c6
+2025-04-30 22:31:51,782 - addons.headless_checker - INFO - Запись результатов в: /output/results.json
+2025-04-30 22:31:51,784 - addons.headless_checker - INFO - Результаты успешно сохранены.
+2025-04-30 22:31:51,784 - addons.headless_checker - INFO - Проверка модели /data/test.fbx завершена за 0:00:00.288246. Статус: failed
+2025-04-30 22:31:51,784 - __main__ - INFO - --- Finished check_model.py with status: failed ---

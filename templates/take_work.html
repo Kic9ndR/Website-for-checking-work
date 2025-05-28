@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Загрузка скриншотов для работы: {{ work.title }}</h2>
+    
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
+        <!-- Скрытое поле для загрузки файлов -->
+        <input type="file" id="fileInput" name="screenshots" multiple accept="image/*" style="display: none;">
+        
+        <!-- Контейнер для квадратов -->
+        <div class="upload-grid" id="uploadContainer">
+            <div class="upload-square" onclick="triggerFileInput()">
+                <span class="plus-icon">+</span>
+            </div>
+        </div>
+        
+        <!-- Контейнер для комментариев -->
+        <div id="commentContainer">
+            <div class="comment-row">
+                <label for="comment-1">Комментарий №1</label>
+                <input type="text" id="comment-1" name="comments[]" class="form-control mt-2">
+            </div>
+        </div>
+        <div>
+            <a href="/works/upload_fbx" class="btn btn-primary mt-3">Продолжить</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function triggerFileInput() {
+        document.getElementById('fileInput').click();
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const files = e.target.files;
+        const container = document.getElementById('uploadContainer');
+        const commentContainer = document.getElementById('commentContainer');
+        
+        // Получаем текущее количество превью в контейнере
+        const currentPreviewCount = container.querySelectorAll('.upload-square .preview-image').length;
+
+        Array.from(files).forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Создаем квадрат с превью
+                const square = document.createElement('div');
+                square.className = 'upload-square';
+                square.innerHTML = `
+                    <img src="${e.target.result}" class="preview-image">
+                    <div class="file-number">${currentPreviewCount + index + 1}</div>
+                    <div class="close-icon" onclick="removeSquare(this)"><i class="fas fa-times"></i></div>
+                `;
+                container.insertBefore(square, container.lastElementChild);
+
+                // Создаем строку для комментария, если это не первый скриншот
+                if (currentPreviewCount + index + 1 > 1) {
+                    const commentRow = document.createElement('div');
+                    commentRow.className = 'comment-row';
+                    commentRow.innerHTML = `
+                        <label for="comment-${currentPreviewCount + index + 1}">Комментарий №${currentPreviewCount + index + 1}:</label>
+                        <input type="text" id="comment-${currentPreviewCount + index + 1}" name="comments[]" class="form-control mt-2">
+                    `;
+                    commentContainer.appendChild(commentRow);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function removeSquare(element) {
+        const square = element.closest('.upload-square');
+        const fileNumber = square.querySelector('.file-number').textContent;
+
+        // Удаляем строку комментария только для скриншотов с номером больше 1
+        if (fileNumber > 1) {
+            const commentRow = document.querySelector(`#commentContainer .comment-row:nth-child(${fileNumber})`);
+            if (commentRow) {
+                commentRow.remove();
+            }
+        }
+
+        // Удаляем квадрат с превью
+        square.remove();
+
+        // Обновляем номера файлов
+        updateFileNumbers();
+    }
+
+    function updateFileNumbers() {
+        const container = document.getElementById('uploadContainer');
+        const previewSquares = container.querySelectorAll('.upload-square .preview-image');
+        previewSquares.forEach((preview, index) => {
+            const fileNumber = preview.parentElement.querySelector('.file-number');
+            if (fileNumber) {
+                fileNumber.textContent = index + 1;
+            }
+        });
+
+        // Обновляем номера в строках комментариев
+        const commentRows = document.querySelectorAll('#commentContainer .comment-row');
+        commentRows.forEach((row, index) => {
+            const label = row.querySelector('label');
+            const input = row.querySelector('input');
+            if (label && input) {
+                label.setAttribute('for', `comment-${index + 1}`);
+                label.textContent = `Комментарий для скриншота ${index + 1}:`;
+                input.setAttribute('id', `comment-${index + 1}`);
+            }
+        });
+    }
+</script>
+
+<style>
+    .comment-row {
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}

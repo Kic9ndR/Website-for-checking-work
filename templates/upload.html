@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Загрузка FBX файлов для проверки</h2>
+    
+    {% if error %}
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    <div class="card">
+        <div class="card-body">
+            <form id="uploadForm" action="/works/upload_fbx" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Выберите ZIP архив с FBX файлами</label>
+                    <input type="file" class="form-control" id="file" name="file" accept=".zip" required>
+                    <div class="form-text">Поддерживаются только ZIP архивы, содержащие FBX файлы</div>
+                </div>
+                
+                {# Индикатор загрузки - ИЗМЕНЕНО #}
+                <div id="loadingIndicator" class="alert alert-info mb-3" style="display: none;">
+                    <div class="d-flex align-items-center">
+                        <div class="spinner-border spinner-border-sm me-2" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                        <span>Идет проверка файла, пожалуйста, подождите...</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Загрузить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    document.getElementById('loadingIndicator').style.display = 'block';
+});
+</script>
+{% endblock %}

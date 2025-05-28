@@ -1,0 +1,99 @@
+{
+    "status": "failed",
+    "check_date": "2025-04-30T22:31:51.773595+00:00",
+    "blender_version": "3.6.5",
+    "input_file": "test.fbx",
+    "input_file_size": 11708,
+    "meshes": [
+        {
+            "name": "Cube",
+            "vertices": 8,
+            "faces": 6,
+            "materials": 0,
+            "checks": {
+                "geometry_cleanliness": {
+                    "status": "PASSED",
+                    "details": "Геометрия чистая."
+                },
+                "triangulation": {
+                    "status": "FAILED",
+                    "details": [
+                        "Найдены нетреугольные полигоны (6)"
+                    ]
+                },
+                "transforms": {
+                    "status": "PASSED",
+                    "details": "Трансформации сброшены."
+                },
+                "uv_maps": {
+                    "status": "FAILED",
+                    "details": [
+                        "Нарушен отступ от края (8px для 2048x2048)"
+                    ]
+                },
+                "naming_convention": {
+                    "status": "FAILED",
+                    "details": [
+                        "Имя не соответствует шаблону (ожидается: SM_...)"
+                    ]
+                },
+                "glass_material_usage": {
+                    "status": "ABSENT",
+                    "details": "Материал содержащий 'glass' не найден"
+                },
+                "ground_material_usage": {
+                    "status": "ABSENT",
+                    "details": "Материал содержащий 'ground' не найден"
+                }
+            }
+        }
+    ],
+    "global_checks": {
+        "scene_content": {
+            "status": "FAILED",
+            "details": "Найдены камеры; Найдены источники света"
+        },
+        "ground_drop": {
+            "status": "N/A",
+            "details": "Объекты 'Ground' не найдены для проверки опуска."
+        },
+        "texture_format": {
+            "status": "N/A",
+            "details": "Текстуры не найдены."
+        },
+        "alpha_channel": {
+            "status": "N/A",
+            "details": "Текстуры не найдены."
+        },
+        "texture_size": {
+            "status": "N/A",
+            "details": "Текстуры не найдены."
+        },
+        "polygon_counts": {
+            "status": "N/A",
+            "details": "Полигоны для подсчета не найдены."
+        },
+        "archive_size": {
+            "status": "N/A",
+            "details": "Проверка выполняется вне скрипта Blender"
+        },
+        "fbx_files": {
+            "status": "N/A",
+            "details": "Проверка выполняется вне скрипта Blender"
+        }
+    },
+    "naming_issues": {
+        "geometry": [
+            {
+                "Cube": [
+                    "Имя не соответствует шаблону (ожидается: SM_...)"
+                ]
+            }
+        ],
+        "materials": [],
+        "textures": [],
+        "duplicates": [],
+        "invalid_chars": []
+    },
+    "message": "Обнаружены ошибки при проверке модели."
+}

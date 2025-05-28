@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Работы на проверку</h2>
+        <a href="/works/new" class="btn btn-outline-primary">Добавить работу</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for work in works %}
+        <div class="col">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">{{ work.title }}</h5>
+                    <div class="d-grid gap-2">
+                        <a href="/works/{{ work.id }}" class="btn btn-outline-primary">Подробнее</a>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    Добавлено: {{ work.created_at|datetimeformat }}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div id="emptyWorksAlert" class="alert alert-info alert-dismissible fade show" role="alert">
+                Нет работ для проверки
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const alertElement = document.getElementById('emptyWorksAlert');
+    
+    if(alertElement) {
+        // Настройка таймера
+        let timeoutId = setTimeout(() => {
+            bootstrap.Alert.getOrCreateInstance(alertElement).close();
+        }, 10000);
+
+        // Обработчик для досрочного закрытия
+        alertElement.querySelector('.btn-close').addEventListener('click', () => {
+            clearTimeout(timeoutId);
+        });
+    }
+});
+</script>
+{% endblock %}

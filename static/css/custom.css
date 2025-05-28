@@ -1,0 +1,726 @@
+.work-details {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.work-actions {
+    margin-top: 20px;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #d3d0d0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.alert {
+    transition: opacity 0.5s ease-out;
+}
+/* Стили для загрузки файлов */
+.upload-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.upload-square {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-square:hover {
+    border-color: #007bff;
+}
+
+.plus-icon {
+    font-size: 40px;
+    color: #6c757d;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-number {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.close-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.close-icon:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Стили для страницы результатов проверки */
+.check-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.check-title {
+    font-size: 2rem;
+    color: #2d3748;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+}
+
+.check-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #4a90e2, #63b3ed);
+    border-radius: 2px;
+}
+
+.success-block {
+    background: linear-gradient(to right, #f0fff4, #dcfce7);
+    border-left: 4px solid #28a745;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.success-block h4 {
+    color: #166534;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.file-info {
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.file-size-block {
+    background: #f8fafc;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.check-section {
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.section-header {
+    background: linear-gradient(135deg, #4a90e2, #63b3ed);
+    color: white;
+    padding: 0.85rem 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.check-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.check-item:last-child {
+    border-bottom: none;
+}
+
+.status-icon {
+    margin-right: 0.5rem;
+}
+
+.status-passed {
+    color: #28a745;
+}
+
+.status-failed {
+    color: #dc3545;
+}
+
+.status-absent {
+    color: #6b7280;
+}
+
+.objects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.object-header {
+    background: linear-gradient(135deg, #4a90e2, #63b3ed);
+    color: white;
+    padding: 1rem;
+    font-weight: 500;
+}
+
+.object-content {
+    padding: 1rem;
+}
+
+.object-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.object-stat:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: #4b5563;
+}
+
+.stat-value {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.action-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.action-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: white;
+}
+
+.button-primary {
+    background: linear-gradient(135deg, #4a90e2, #63b3ed);
+}
+
+.button-secondary {
+    background: linear-gradient(135deg, #6b7280, #9ca3af);
+}
+
+.button-primary:hover,
+.button-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Дополнительные стили для страницы результатов проверки */
+.check-results-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.check-results-title {
+    font-size: 1.75rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.check-alert {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: slideIn 0.3s ease-out;
+    border: 1px solid transparent;
+}
+
+.alert-icon {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-content h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.alert-content p {
+    margin-bottom: 0.3rem;
+}
+
+.details-link {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.details-link:hover {
+    text-decoration: underline;
+}
+
+.details-link i {
+    margin-left: 4px;
+}
+
+.check-alert-success {
+    background-color: #e6f7ec;
+    border-color: #b7ebc9;
+    color: #1b5e20;
+}
+
+.check-alert-success .alert-icon {
+    color: #2e7d32;
+}
+
+.check-alert-error {
+    background-color: #fdecea;
+    border-color: #f5c6cb;
+    color: #a94442;
+}
+
+.check-alert-error .alert-icon {
+    color: #c62828;
+}
+
+.file-info {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.file-info p {
+    margin: 0.25rem 0;
+}
+
+/* Стили для блока проверки размера файла */
+.file-size-check-block {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.file-size-check-block span:first-child {
+    font-weight: 500;
+    color: #333;
+}
+
+.file-size-info {
+    color: #555;
+}
+
+.file-size-status {
+    font-weight: 500;
+}
+
+.check-section {
+    background: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    animation: slideIn 0.3s ease-out;
+}
+
+.check-label-header {
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.check-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.25rem;
+    border-bottom: 1px solid #e8edf1;
+    transition: background-color 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.check-item:last-child {
+    border-bottom: none;
+}
+
+.check-item:hover {
+    background-color: #f8fafc;
+}
+
+.check-content {
+    flex: 1;
+    padding-right: 1rem;
+}
+
+.check-label {
+    font-weight: 500;
+    color: #334155;
+}
+
+.check-message {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    gap: 0.4rem;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.status i {
+    font-size: 0.85em;
+}
+
+.status-passed {
+    background-color: #e6f7ec;
+    color: #28a745;
+    border-color: #b7ebc9;
+}
+
+.status-failed {
+    background-color: #fdecea;
+    color: #dc3545;
+    border-color: #f5c6cb;
+}
+
+.status-absent {
+    background-color: #f1f5f9;
+    color: #64748b;
+    border-color: #e2e8f0;
+}
+
+.status-na, .status-n\/a, .status-present {
+    background-color: #f1f5f9;
+    color: #64748b;
+    border-color: #e2e8f0;
+}
+
+.objects-section {
+    margin-top: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Стили для object-card (используем старые или адаптируем) */
+.object-card {
+    background: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.object-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* Стилизованный заголовок для карточки объекта */
+.object-header {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 0.85rem 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.object-content {
+    padding: 1.25rem;
+}
+
+/* Стили для статистики объекта */
+.object-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stats-item {
+    background: #f8fafc;
+    padding: 0.8rem;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #e8edf1;
+}
+
+.stats-label {
+    color: #64748b;
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.stats-value {
+    color: #334155;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Стили для блока проверок внутри объекта */
+.object-checks {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8edf1;
+}
+
+.object-checks-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 0.8rem;
+}
+
+.check-item-object {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9rem;
+}
+.check-item-object:last-of-type {
+    border-bottom: none;
+}
+
+.check-item-object-label {
+    color: #333;
+    padding-right: 1rem;
+}
+
+.check-details-object {
+    font-size: 0.85rem;
+    color: #666;
+    padding: 0.3rem 0 0.6rem 0.5rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px dashed #eee;
+    line-height: 1.4;
+}
+.check-details-object:last-of-type {
+    border-bottom: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* === Стили для заголовка карточки объекта (УВЕЛИЧЕНА СПЕЦИФИЧНОСТЬ) === */
+/* Используем .check-section для увеличения специфичности */
+.check-section .object-info-header {
+    background: linear-gradient(135deg, #4a90e2, #63b3ed); /* Синий градиент */
+    color: white; /* Белый текст */
+    padding: 0.75rem 1rem; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: none; 
+}
+
+/* Убедимся, что стили для дочерних элементов тоже имеют достаточную специфичность */
+.check-section .object-info-header .mesh-name {
+    font-weight: 500;
+    color: white; 
+    flex-grow: 1;
+}
+
+.check-section .object-info-header .check-toggle-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 0.8rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem; 
+}
+
+.check-section .object-info-header .check-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.check-section .object-info-header .check-toggle-btn i {
+    transition: transform 0.3s ease;
+}
+
+.check-section .object-info-header .check-toggle-btn[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+/* Дополнительные стили из удаленного блока <style> */
+.basic-info span.text-muted {
+    font-size: 0.85rem;
+}
+
+/* .check-list уже стилизован глобально, но убедимся, что отступ убран */
+.check-list {
+    padding-left: 0;
+    list-style: none;
+}
+
+.error-details {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 4px;
+    color: #721c24;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.file-results-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.file-results-section h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.file-info ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+}
+
+.file-info li {
+    padding: 0.25rem 0;
+    color: #666;
+}

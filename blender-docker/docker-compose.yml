@@ -1,0 +1,19 @@
+services:
+  blender:
+    build: .
+    volumes:
+      - ./input:/input:rw
+      - ./output:/output:rw
+    environment:
+      - BLENDER_PATH=/opt/blender/blender
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
+      - LC_CTYPE=C.UTF-8
+      - LC_MESSAGES=C.UTF-8
+      - PYTHONIOENCODING=utf-8
+      - PYTHONUNBUFFERED=1
+      - TERM=xterm
+      - BLENDER_USER_SCRIPTS=/app
+      - BLENDER_SYSTEM_SCRIPTS=/app
+      - PYTHONLEGACYWINDOWSSTDIO=utf-8
+    command: /app/check_model.sh

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Личный кабинет</h2>
+
+    <!-- Информация о сотруднике -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Информация о сотруднике</h5>
+            <p><strong>Имя:</strong> {{ current_user.full_name }}</p>
+            <p><strong>Должность:</strong> {{ current_user.position }}</p>
+            <p><strong>Логин:</strong> {{ current_user.login }}</p>
+        </div>
+    </div>
+
+    <!-- Текущий проект -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Текущая работа</h5>
+            {% if current_work %}
+                <p><strong>Название:</strong> {{ current_work.title }}</p>
+                <p><strong>Ссылка на работу:</strong> <a href="{{ current_work.work_link }}" target="_blank">{{ current_work.work_link }}</a></p>
+                <p><strong>Дата создания:</strong> {{ current_work.created_at|datetimeformat }}</p>
+            {% else %}
+                <p>В данный момент вы не проверяете ни одной работы.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Завершенные проекты -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Завершенные работы</h5>
+            {% if completed_works %}
+                <ul>
+                    {% for completed_work in completed_works %}
+                        <li>
+                            <strong>{{ completed_work.title }}</strong> - Завершено: {{ completed_work.completed_at|datetimeformat}}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>У вас пока нет завершенных работ.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

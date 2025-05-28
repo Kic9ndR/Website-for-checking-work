@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{{ work.title }}</h2>
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Информация о работе</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Ссылка на работу:</strong>
+                            {% if work.work_link %}
+                                <a href="{{ work.work_link }}" target="_blank">{{ work.work_link }}</a>
+                            {% else %}
+                                <span class="text-muted">Не указана</span>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Буклет:</strong>
+                            {% if work.booklet %}
+                                <a href="{{ work.booklet }}" target="_blank">{{ work.booklet }}</a>
+                            {% else %}
+                                <span class="text-muted">Не указан</span>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Правки:</strong>
+                            {% if work.corrections %}
+                                <p>{{ work.corrections }}</p>
+                            {% else %}
+                                <span class="text-muted">Нет правок</span>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Дата создания:</strong>
+                            {{ work.created_at|datetimeformat }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Кнопки "Взять в работу", "Продолжить" и "Отказаться" -->
+            <div class="card shadow mt-4">
+                <div class="card-body">
+                    {% if work.assigned_to == True %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <a href="/works/{{ work.id }}/take" class="btn btn-success me-md-2">Продолжить</a>
+                            <a href="/works/{{ work.id }}/decline" class="btn btn-danger">Отказаться</a>
+                        </div>
+                    {% else %}
+                        <a href="/works/{{ work.id }}/take">
+                            <button type="submit" class="btn btn-primary btn-block">Взять в работу</button>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

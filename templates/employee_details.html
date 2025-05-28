@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .toast {
+        background-color: #e3f2fd !important; /* Голубой цвет фона */
+        border: 1px solid #90caf9; /* Голубая рамка */
+    }
+    .toast-header {
+        background-color: #bbdefb !important; /* Светло-голубой цвет для заголовка */
+        border-bottom: 1px solid #90caf9;
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Контейнер для уведомлений -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Уведомление</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+            </div>
+            <div class="toast-body" id="toast-message">
+                <!-- Здесь будет текст сообщения -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Информация о сотруднике</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Основная информация</h5>
+                    <table class="table">
+                        <tr>
+                            <th>ID:</th>
+                            <td>{{ employee.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Логин:</th>
+                            <td>{{ employee.login }}</td>
+                        </tr>
+                        <tr>
+                            <th>ФИО:</th>
+                            <td>{{ employee.full_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Роль:</th>
+                            <td>
+                                <form id="positionForm" class="d-inline">
+                                    <select name="position" class="form-select" onchange="updatePosition(this.value)">
+                                        <option value="Ученик" {% if employee.position == "Ученик" %}selected{% endif %}>Ученик</option>
+                                        <option value="Проверяющий" {% if employee.position == "Проверяющий" %}selected{% endif %}>Проверяющий</option>
+                                        <option value="Мастер 3D" {% if employee.position == "Мастер 3D" %}selected{% endif %}>Мастер 3D</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h5>Статистика</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Текущий проект:</th>
+                            <td>{{ current_project_title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Завершено работ:</th>
+                            <td>{{ completed_works_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Проверяет работ:</th>
+                            <td>{{ inspected_works_count }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="/employees" class="btn btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация toast
+    const toastElement = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 3000
+    });
+
+    window.updatePosition = async function(newPosition) {
+        try {
+            const response = await fetch(`/employees/{{ employee.id }}/update-position`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ new_position: newPosition })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                toastMessage.textContent = data.message;
+                toast.show();
+            } else {
+                const error = await response.json();
+                toastMessage.textContent = error.detail || 'Ошибка при обновлении роли';
+                toast.show();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toastMessage.textContent = 'Произошла ошибка при обновлении роли';
+            toast.show();
+        }
+    };
+});
+</script>
+{% endblock %} 

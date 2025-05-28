@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<style>
+    .check-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+    .check-item:last-child {
+        border-bottom: none;
+    }
+    .check-details {
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+    .check-status .badge {
+        font-size: 0.9em;
+        padding: 0.5em 0.75em;
+        min-width: 110px;
+        text-align: center;
+    }
+    .naming-list ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+    }
+    .naming-list li {
+        font-size: 0.9em;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Результаты проверки модели{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Результаты проверки FBX файлов</h2>
+
+    {# --- Блок ошибок и статуса архива (нет FBX, ошибка проверки и т.д.) --- #}
+    {% if results and results.error and "В данном архиве нет FBX файлов" in results.error %}
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <div>{{ results.error }}</div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="/works/upload_fbx" class="btn btn-primary">
+            <i class="fas fa-upload me-2"></i>Загрузить другой архив
+        </a>
+    </div>
+    {% elif check_error %}
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <div>{{ check_error }}</div>
+    </div>
+    {% elif not results %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <i class="fas fa-info-circle me-2"></i>
+        <div>Результаты проверки отсутствуют или не удалось их загрузить.</div>
+    </div>
+    {% else %}
+
+        {# --- Блок проверки геометрии: каждый этап проверки архива (размер, состав, сцена, Ground, чистота, триангуляция, трансформации, UV, полигоны) отображается отдельной строкой --- #}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4><i class="fas fa-cube me-2"></i>Проверка геометрии</h4>
+                {# <button class="btn btn-sm btn-outline-secondary">Check</button> #} {# Placeholder кнопка #}
+            </div>
+            <div class="list-group list-group-flush">
+                {% set geo_order = [
+                    'archive_size',
+                    'fbx_files',
+                    'scene_content',
+                    'ground_drop',
+                    'geometry_cleanliness',
+                    'triangulation',
+                    'transforms',
+                    'uv_maps',
+                    'polygons'
+                ] %}
+                {% set name_map = {
+                    'archive_size': 'Размер архива',
+                    'fbx_files': 'Состав архива (FBX файлы)',
+                    'scene_content': 'Содержимое сцены',
+                    'ground_drop': 'Опуск геометрии Ground',
+                    'geometry_cleanliness': 'Чистота геометрии',
+                    'triangulation': 'Триангуляция',
+                    'transforms': 'Трансформации',
+                    'uv_maps': 'UV-развёртка',
+                    'polygons': 'Подсчёт полигонов'
+                } %}
+                {% for key in geo_order %}
+                    {% if key in results.geometry_data %}
+                        {% set details = results.geometry_data[key] %}
+                        <div class="list-group-item check-item">
+                            <div>
+                                <strong>{{ name_map.get(key, key) }}</strong>
+                                {# Краткое пояснение для пользователя #}
+                                {% if key == 'archive_size' %}
+                                    <div class="text-muted small">Проверка, не превышает ли архив лимит по размеру.</div>
+                                {% elif key == 'fbx_files' %}
+                                    <div class="text-muted small">Проверка наличия и корректности FBX-файлов в архиве.</div>
+                                {% elif key == 'scene_content' %}
+                                    <div class="text-muted small">Проверка на лишние объекты, камеры, кости и анимации.</div>
+                                {% elif key == 'ground_drop' %}
+                                    <div class="text-muted small">Проверка, опущен ли Ground на нужную высоту.</div>
+                                {% elif key == 'geometry_cleanliness' %}
+                                    <div class="text-muted small">Проверка на летающие точки, дубликаты и ошибки геометрии.</div>
+                                {% elif key == 'triangulation' %}
+                                    <div class="text-muted small">Проверка, что вся геометрия состоит из треугольников.</div>
+                                {% elif key == 'transforms' %}
+                                    <div class="text-muted small">Проверка сброса трансформаций (вращение, масштаб).</div>
+                                {% elif key == 'uv_maps' %}
+                                    <div class="text-muted small">Проверка корректности UV-развёртки.</div>
+                                {% elif key == 'polygons' %}
+                                    <div class="text-muted small">Проверка количества полигонов в модели.</div>
+                                {% endif %}
+                                <div class="check-details">
+                                {% if details.messages %}
+                                    {% for msg in details.messages %}
+                                        <div>{{ msg.replace("Archive size", "Размер архива", 1).replace(" MB", " МБ", 1).replace("Archive contents are valid", "Содержимое архива корректно", 1).replace("Ground drop check passed", "Проверка опуска Ground пройдена", 1).replace("All geometry is triangulated", "Вся геометрия триангулирована", 1).replace("Cameras found", "Найдены камеры", 1).replace("Lights found", "Найдены источники света", 1).replace("No Ground objects found", "Объекты Ground не найдены", 1) }}</div>
+                                    {% endfor %}
+                                {% else %}
+                                    <span>-</span>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="check-status">
+                                {% if details.status == 'PASSED' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>ПРОЙДЕНО</span>
+                                {% elif details.status == 'FAILED' %}
+                                    <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i>ПРОВАЛЕНО</span>
+                                {% elif details.status == 'ABSENT' %}
+                                    <span class="badge bg-secondary"><i class="fas fa-question-circle me-1"></i>Н/П</span> {# Не применимо #}
+                                {% else %}
+                                    <span class="badge bg-secondary"><i class="fas fa-minus-circle me-1"></i>НЕПРОВЕРЕНО</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {# --- Блок проверки текстур и материалов: отдельные этапы проверки текстур и материалов --- #}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4><i class="fas fa-palette me-2"></i>Проверка текстур и материалов</h4>
+                 {# <button class="btn btn-sm btn-outline-secondary">Check</button> #}
+            </div>
+             <div class="list-group list-group-flush">
+                {% set tex_order = [
+                    'texture_format',
+                    'alpha_channel',
+                    'texture_size',
+                    'glass_material',
+                    'ground_material'
+                ] %}
+                {% set tex_name_map = {
+                    'texture_format': 'Формат текстур',
+                    'alpha_channel': 'Альфа-канал',
+                    'texture_size': 'Размер текстур',
+                    'glass_material': 'Стеклянные материалы',
+                    'ground_material': 'Материалы Ground'
+                } %}
+                {% for key in tex_order %}
+                    {% if key in results.texture_material %}
+                        {% set details = results.texture_material[key] %}
+                         <div class="list-group-item check-item">
+                            <div>
+                                <strong>{{ tex_name_map.get(key, key) }}</strong>
+                                {# Краткое пояснение для пользователя #}
+                                {% if key == 'texture_format' %}
+                                    <div class="text-muted small">Проверка, что все текстуры в формате PNG.</div>
+                                {% elif key == 'alpha_channel' %}
+                                    <div class="text-muted small">Проверка отсутствия альфа-канала в текстурах.</div>
+                                {% elif key == 'texture_size' %}
+                                    <div class="text-muted small">Проверка соответствия размера текстур требованиям.</div>
+                                {% elif key == 'glass_material' %}
+                                    <div class="text-muted small">Проверка ограничений для стеклянных материалов.</div>
+                                {% elif key == 'ground_material' %}
+                                    <div class="text-muted small">Проверка ограничений для материалов Ground.</div>
+                                {% endif %}
+                                <div class="check-details">
+                                {% if details.messages %}
+                                    {% for msg in details.messages %}
+                                        <div>{{ msg.replace("No textures found to check format.", "Текстуры для проверки формата не найдены.", 1).replace("No textures found to check alpha channel.", "Текстуры для проверки альфа-канала не найдены.", 1).replace("No textures found to check size.", "Текстуры для проверки размера не найдены.", 1).replace("No glass objects found.", "Стеклянные объекты не найдены.", 1).replace("No ground objects found.", "Объекты Ground не найдены.", 1) }}</div>
+                                    {% endfor %}
+                                {% else %}
+                                    <span>Все в порядке / Не применимо</span>
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="check-status">
+                                {% if details.status == 'PASSED' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>ПРОЙДЕНО</span>
+                                {% elif details.status == 'FAILED' %}
+                                    <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i>ПРОВАЛЕНО</span>
+                                {% elif details.status == 'ABSENT' %}
+                                    <span class="badge bg-secondary"><i class="fas fa-question-circle me-1"></i>Н/П</span>
+                                {% else %}
+                                    <span class="badge bg-secondary"><i class="fas fa-minus-circle me-1"></i>НЕПРОВЕРЕНО</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {# --- Блок проверки нейминга: отдельные этапы проверки имён геометрии, материалов, текстур, символов и дубликатов --- #}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4><i class="fas fa-signature me-2"></i>Проверка нейминга</h4>
+                {# <button class="btn btn-sm btn-outline-secondary">Check</button> #}
+            </div>
+            <div class="list-group list-group-flush">
+                {% set naming_order = ['geometry', 'materials', 'textures', 'invalid_chars', 'duplicates'] %}
+                {% set naming_map = {
+                    'geometry': 'Нейминг геометрии',
+                    'materials': 'Нейминг материалов',
+                    'textures': 'Нейминг текстур',
+                    'invalid_chars': 'Недопустимые символы',
+                    'duplicates': 'Дубликаты'
+                } %}
+                {% for type in naming_order %}
+                    {% if type in results.naming and results.naming[type] %}
+                        {% set items = results.naming[type] %}
+                        <div class="list-group-item check-item">
+                             <div>
+                                <strong class="d-block mb-2">{{ naming_map.get(type, type) }}</strong> {# Возвращаем отступ #}
+                                {# Краткое пояснение для пользователя #}
+                                {% if type == 'geometry' %}
+                                    <div class="text-muted small">Проверка имён объектов геометрии.</div>
+                                {% elif type == 'materials' %}
+                                    <div class="text-muted small">Проверка имён материалов.</div>
+                                {% elif type == 'textures' %}
+                                    <div class="text-muted small">Проверка имён текстур.</div>
+                                {% elif type == 'invalid_chars' %}
+                                    <div class="text-muted small">Проверка на недопустимые символы.</div>
+                                {% elif type == 'duplicates' %}
+                                    <div class="text-muted small">Проверка на дубликаты имён.</div>
+                                {% endif %}
+                                <div class="check-details naming-list">
+                                    <ul>
+                                    {% for item_list in items %}
+                                        {# item_list это обычно список из одного элемента с сообщением #}
+                                        {% set item_str = item_list[0] if item_list else "" %}
+                                        {# Пытаемся разделить по статусу PASSED или FAILED #}
+                                        {% set parts_passed = item_str.split(': PASSED') %}
+                                        {% set item_name = parts_passed[0] %}
+                                        {% set is_passed = parts_passed | length > 1 %}
+                                        {% if not is_passed %}
+                                            {% set parts_failed = item_str.split(': FAILED') %}
+                                            {% set item_name = parts_failed[0] %}
+                                            {% set is_failed = parts_failed | length > 1 %}
+                                        {% else %}
+                                            {% set is_failed = false %}
+                                        {% endif %}
+
+                                        {# Для invalid_chars и duplicates, item_name будет полной строкой #}
+                                        {% if type == 'invalid_chars' or type == 'duplicates' %}
+                                            {% set item_name = item_str %}
+                                        {% endif %}
+
+                                        <li class="d-flex justify-content-between align-items-center mb-1">
+                                            <span>{{ item_name }}</span>
+                                            <div class="check-status ms-5">
+                                                {% if is_passed %}
+                                                    <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>ПРОЙДЕНО</span>
+                                                {% elif is_failed %}
+                                                    <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i>ПРОВАЛЕНО</span>
+                                                    {# Можно добавить вывод причины ошибки, если она есть: parts_failed[1] #}
+                                                {% elif type == 'invalid_chars' or type == 'duplicates' %}
+                                                     <span class="badge bg-warning text-dark"><i class="fas fa-exclamation-triangle me-1"></i>ЗАМЕЧАНИЕ</span>
+                                                {% else %}
+                                                     {# Если статус не определен, показываем ИНФО #}
+                                                     <span class="badge bg-secondary"><i class="fas fa-info-circle me-1"></i>ИНФО</span>
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif type in results.naming and not results.naming[type] %}
+                         <div class="list-group-item check-item">
+                             <div>
+                                <strong>{{ naming_map.get(type, type) }}</strong>
+                                <div class="check-details naming-list">
+                                    <span>Нет ошибок/дубликатов</span>
+                                </div>
+                            </div>
+                             <div class="check-status">
+                                 <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>OK</span>
+                             </div>
+                         </div>
+                    {% endif %}
+                 {% endfor %}
+            </div>
+        </div>
+
+    {% endif %}
+
+    <div class="mt-4 mb-5">
+        <a href="/works/upload_fbx" class="btn btn-primary">
+            <i class="fas fa-upload me-2"></i>Загрузить новый файл
+        </a>
+        <a href="/works/{{ work_id }}" class="btn btn-secondary ms-2">
+            <i class="fas fa-arrow-left me-2"></i>Вернуться к работе
+        </a>
+    </div>
+</div>
+{% endblock %}
